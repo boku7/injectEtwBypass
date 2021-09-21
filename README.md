@@ -12,6 +12,8 @@ bash compile.sh
 ```
 
 ### Run from Cobalt Strike Beacon Console
++ After compiling `injectEtwBypass.o`, load the `injectEtwBypass.cna` script into Cobalt Strikes via the Script Manager
++ Once loaded into Cobalt Strike, you can use the command from the interactive beacon console:
 ```bash
 beacon> help
     injectEtwBypass           Inject ETW Bypass into Remote Process via Syscalls (HellsGate|HalosGate)
