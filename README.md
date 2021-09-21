@@ -41,6 +41,15 @@ Injecting NTDLL.EtwEventWrite bypass in remote process: 8968 (PID)
   + Awesome work on this method, really enjoyed working through it myself. Thank you!
   + https://github.com/am0nsec/HellsGate 
   + Link to the [Hell's Gate paper: https://vxug.fakedoma.in/papers/VXUG/Exclusive/HellsGate.pdf](https://vxug.fakedoma.in/papers/VXUG/Exclusive/HellsGate.pdf)
+### BOF Helpers
+##### Raphael Mudge - Beacon Object Files - Luser Demo
++ https://www.youtube.com/watch?v=gfYswA_Ronw
+##### Cobalt Strike - Beacon Object Files
++ https://www.cobaltstrike.com/help-beacon-object-files
+###### ajpc500/BOFs
++ https://github.com/ajpc500/BOFs/
+###### trustedsec/CS-Situational-Awareness-BOF
++ https://github.com/trustedsec/CS-Situational-Awareness-BOF
 ### Great Resource for learning Intel ASM
 + [Pentester Academy - SLAE64](https://www.pentesteracademy.com/course?id=7)
 ### Implementing ASM in C Code with GCC
