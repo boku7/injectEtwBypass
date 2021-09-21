@@ -1,8 +1,24 @@
 ## Cobalt Strike BOF - Inject ETW Bypass
 Inject ETW Bypass into Remote Process via Syscalls (HellsGate|HalosGate)
 
-#### Running inject-amsiBypass BOF from CobaltStrike 
+#### Running InjectEtwBypass BOF from CobaltStrike to Bypass ETW in Notepad.exe
   ![](images/injectEtw.png)
+
+## Build (Only tested from macOS at the moment)
+1. Run the compile-x64.sh shell script after installling required dependencies
+```bash
+# Install brew on macOS if you need it (https://brew.sh/)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# Install Ming using Brew
+brew install mingw-w64
+# Clone this Reflective DLL project from this github repo
+git clone https://github.com/boku7/CobaltStrikeReflectiveLoader.git
+# Compile the ReflectiveLoader Object file
+cd CobaltStrikeReflectiveLoader/
+cat compile.sh
+x86_64-w64-mingw32-gcc -m64 -mwindows -c injectEtwBypass.c -o injectEtwBypass.o -masm=intel -Wall -fno-asynchronous-unwind-tables -nostdlib -fno-ident -Wl,-Tlinker.ld,--no-seh
+bash compile.sh
+```
 
 ## Credits / References
 ### ETW Bypass (Mass Credits to [Adam Chester (@\_xpn\_) of TrustedSec](https://twitter.com/_xpn_) 
@@ -23,3 +39,7 @@ Inject ETW Bypass into Remote Process via Syscalls (HellsGate|HalosGate)
   + Link to the [Hell's Gate paper: https://vxug.fakedoma.in/papers/VXUG/Exclusive/HellsGate.pdf](https://vxug.fakedoma.in/papers/VXUG/Exclusive/HellsGate.pdf)
 ### Great Resource for learning Intel ASM
 + [Pentester Academy - SLAE64](https://www.pentesteracademy.com/course?id=7)
+### Implementing ASM in C Code with GCC
++ [Outflank - Direct Syscalls in Beacon Object Files](https://outflank.nl/blog/2020/12/26/direct-syscalls-in-beacon-object-files/)
++ https://www.cs.uaf.edu/2011/fall/cs301/lecture/10_12_asm_c.html
++ http://gcc.gnu.org/onlinedocs/gcc-4.0.2/gcc/Extended-Asm.html#Extended-Asm
