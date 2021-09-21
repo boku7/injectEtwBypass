@@ -211,7 +211,7 @@ void go(char * args, int len) {
 	cid.pid = NULL;
 	cid.UniqueThread = NULL;
 	cid.pid = (HANDLE)pid;
-	__debugbreak();
+	//__debugbreak();
 	// nt.NtOpenProcess(&hProc, 0x1FFFFF, &oa, &cid);
 	HellsGate(nt.NtOpenProcessSyscall);
     HellDescent(&hProc, 0x1FFFFF, &oa, &cid);
