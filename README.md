@@ -25,7 +25,7 @@ Injecting NTDLL.EtwEventWrite bypass in remote process: 8968 (PID)
 ```
 
 ## Credits / References
-### ETW Bypass (Mass Credits to [Adam Chester (@\_xpn\_) of TrustedSec](https://twitter.com/_xpn_) 
+### ETW Bypass Massive Credits to [Adam Chester (@\_xpn\_) of TrustedSec](https://twitter.com/_xpn_) 
 + [@\_xpn\_ Hiding Your .NET – ETW](https://www.mdsec.co.uk/2020/03/hiding-your-net-etw/)
 + [ajpc500/BOFs](https://github.com/ajpc500/BOFs/)
 + [Offensive Security OSEP](https://www.offensive-security.com/pen300-osep/)
