@@ -31,6 +31,8 @@ Injecting NTDLL.EtwEventWrite bypass in remote process: 8968 (PID)
 + [@\_xpn\_ Hiding Your .NET – ETW](https://www.mdsec.co.uk/2020/03/hiding-your-net-etw/)
 + [ajpc500/BOFs](https://github.com/ajpc500/BOFs/)
 + [Offensive Security OSEP](https://www.offensive-security.com/pen300-osep/)
+### Creating Shellcode BOFs with C [Chetan Nayak (@NinjaParanoid)](https://twitter.com/NinjaParanoid)
++ [Executing Position Independent Shellcode from Object Files in Memory](https://bruteratel.com/research/feature-update/2021/01/30/OBJEXEC/)
 ### HalosGate SysCaller
 + Reenz0h from @SEKTOR7net
   + Most of the C techniques I use are from Reenz0h's awesome courses and blogs 
