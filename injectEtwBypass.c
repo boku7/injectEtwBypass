@@ -1,5 +1,5 @@
 // Author: Bobby Cooke (@0xBoku) // SpiderLabs // github.com/boku7 // https://www.linkedin.com/in/bobby-cooke/ // https://0xboku.com
-// Credits / References: Reenz0h from @SEKTOR7net, @_xpn_, Pavel Yosifovich (@zodiacon), @smelly__vx & @am0nsec, @ajpc500
+// Credits / References: Reenz0h (@SEKTOR7net), Adam Chester (@_xpn_), Chetan Nayak (@NinjaParanoid), Pavel Yosifovich (@zodiacon), @smelly__vx & @am0nsec, @ajpc500
 #include <windows.h>
 #include "beacon.h"
 
