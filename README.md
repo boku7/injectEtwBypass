@@ -34,8 +34,8 @@ Injecting NTDLL.EtwEventWrite bypass in remote process: 8968 (PID)
 ### Creating Shellcode BOFs with C [Chetan Nayak (@NinjaParanoid)](https://twitter.com/NinjaParanoid)
 + [Executing Position Independent Shellcode from Object Files in Memory](https://bruteratel.com/research/feature-update/2021/01/30/OBJEXEC/)
 ### HalosGate SysCaller
-+ Reenz0h from @SEKTOR7net
-  + Most of the C techniques I use are from Reenz0h's awesome courses and blogs 
++ [Reenz0h from @SEKTOR7net](https://twitter.com/SEKTOR7net)
+  + Most of the C techniques I use are from [Reenz0h's awesome Sektor7 courses](https://institute.sektor7.net/) & blogs 
   + Best classes for malware development out there.
   + Creator of the halos gate technique. His work was the motivation for this work.
   + [Sektor7 HalosGate Blog](https://blog.sektor7.net/#!res/2021/halosgate.md)
@@ -43,7 +43,7 @@ Injecting NTDLL.EtwEventWrite bypass in remote process: 8968 (PID)
 + @smelly__vx & @am0nsec ( Creators/Publishers of the Hells Gate technique )
   + Could not have made my implementation of HellsGate without them :)
   + Awesome work on this method, really enjoyed working through it myself. Thank you!
-  + https://github.com/am0nsec/HellsGate 
+  + [HellsGate Github Repo](https://github.com/am0nsec/HellsGate)
   + Link to the [Hell's Gate paper: https://vxug.fakedoma.in/papers/VXUG/Exclusive/HellsGate.pdf](https://vxug.fakedoma.in/papers/VXUG/Exclusive/HellsGate.pdf)
 ### BOF Helpers
 ##### Raphael Mudge - Beacon Object Files - Luser Demo
