@@ -56,7 +56,7 @@ Injecting NTDLL.EtwEventWrite bypass in remote process: 8968 (PID)
 + https://github.com/ajpc500/BOFs/
 ###### trustedsec/CS-Situational-Awareness-BOF
 + https://github.com/trustedsec/CS-Situational-Awareness-BOF
-### Great Resource for learning Intel ASM
+### Great Resource for learning Intel ASM - [Vivek Ramachandran (@vivekramac)](https://twitter.com/vivekramac)
 + [Pentester Academy - SLAE64](https://www.pentesteracademy.com/course?id=7)
 ### Implementing ASM in C Code with GCC
 + [Outflank - Direct Syscalls in Beacon Object Files](https://outflank.nl/blog/2020/12/26/direct-syscalls-in-beacon-object-files/)
