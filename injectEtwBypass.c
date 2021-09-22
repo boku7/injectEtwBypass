@@ -1,5 +1,6 @@
 // Author: Bobby Cooke (@0xBoku) // SpiderLabs // github.com/boku7 // https://www.linkedin.com/in/bobby-cooke/ // https://0xboku.com
-// Credits / References: Reenz0h (@SEKTOR7net), Adam Chester (@_xpn_ / @TrustedSec), Chetan Nayak (@NinjaParanoid), Vivek Ramachandran (@vivekramac), Pavel Yosifovich (@zodiacon), @smelly__vx & @am0nsec, @ajpc500, Matt Kingstone (@n00bRage)
+// Credits / References: Reenz0h (@SEKTOR7net), Adam Chester (@_xpn_ / @TrustedSec), Chetan Nayak (@NinjaParanoid), 
+//                       Vivek Ramachandran (@vivekramac), Pavel Yosifovich (@zodiacon), @smelly__vx & @am0nsec, @ajpc500, Matt Kingstone (@n00bRage)
 #include <windows.h>
 #include "beacon.h"
 
@@ -113,7 +114,8 @@ void go(char * args, int len) {
 	ntdll.Export.NameTable    = getExportNameTable(ntdll.dllBase, ntdll.Export.Directory);
 	ntdll.Export.OrdinalTable = getExportOrdinalTable(ntdll.dllBase, ntdll.Export.Directory);
 	ntapis nt;
-	// ######### NTDLL.EtwEventWrite Bypass // Credit: @_xpn_ & @ajpc500 // https://www.mdsec.co.uk/2020/03/hiding-your-net-etw/ & https://github.com/ajpc500/BOFs/blob/main/ETW/etw.c
+	// ######### NTDLL.EtwEventWrite Bypass 
+	// Credit: @_xpn_ & @ajpc500 // https://www.mdsec.co.uk/2020/03/hiding-your-net-etw/ & https://github.com/ajpc500/BOFs/blob/main/ETW/etw.c
 	char EtwEventWriteStr[16];
 	// python reverse.py EtwEventWrite
 	// String length : 13
