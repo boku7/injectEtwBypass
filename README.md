@@ -40,7 +40,7 @@ Injecting NTDLL.EtwEventWrite bypass in remote process: 8968 (PID)
   + Creator of the halos gate technique. His work was the motivation for this work.
   + [Sektor7 HalosGate Blog](https://blog.sektor7.net/#!res/2021/halosgate.md)
 ### HellsGate Syscaller
-+ @smelly__vx & @am0nsec ( Creators/Publishers of the Hells Gate technique )
++ [@smelly__vx](https://twitter.com/smelly__vx) & [@am0nsec](https://twitter.com/am0nsec) ( Creators/Publishers of the Hells Gate technique )
   + Could not have made my implementation of HellsGate without them :)
   + Awesome work on this method, really enjoyed working through it myself. Thank you!
   + [HellsGate Github Repo](https://github.com/am0nsec/HellsGate)
