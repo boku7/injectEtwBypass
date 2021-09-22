@@ -45,6 +45,8 @@ Injecting NTDLL.EtwEventWrite bypass in remote process: 8968 (PID)
   + Awesome work on this method, really enjoyed working through it myself. Thank you!
   + [HellsGate Github Repo](https://github.com/am0nsec/HellsGate)
   + Link to the [Hell's Gate paper: https://vxug.fakedoma.in/papers/VXUG/Exclusive/HellsGate.pdf](https://vxug.fakedoma.in/papers/VXUG/Exclusive/HellsGate.pdf)
+### Process Injection - [Pavel Yosifovich (@zodiacon)](https://twitter.com/zodiacon)
+  + [Windows Process Injection for Red-Blue Teams](https://www.pentesteracademy.com/course?id=50)
 ### BOF Helpers
 ##### Raphael Mudge - Beacon Object Files - Luser Demo
 + https://www.youtube.com/watch?v=gfYswA_Ronw
