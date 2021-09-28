@@ -1,6 +1,8 @@
 // Author: Bobby Cooke (@0xBoku) // SpiderLabs // github.com/boku7 // https://www.linkedin.com/in/bobby-cooke/ // https://0xboku.com
 // Credits / References: Reenz0h (@SEKTOR7net), Adam Chester (@_xpn_ / @TrustedSec), Chetan Nayak (@NinjaParanoid), 
 //                       Vivek Ramachandran (@vivekramac), Pavel Yosifovich (@zodiacon), @smelly__vx & @am0nsec, @ajpc500, Matt Kingstone (@n00bRage)
+#pragma GCC diagnostic ignored "-Wint-to-pointer-cast"
+
 #include <windows.h>
 #include "beacon.h"
 
